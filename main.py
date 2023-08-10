@@ -6,15 +6,17 @@ import urllib3
 from IPython.display import display
 from pandas import json_normalize
 
+import login as login
+
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 auth_url = "https://www.strava.com/oauth/token"
 activities_url = "https://www.strava.com/api/v3/athlete/activities"
 
 payload = {
-    'client_id': "",
-    'client_secret': '',
-    'refresh_token': '',
+    'client_id': f'{login.client_id}',
+    'client_secret': f'{login.client_secret}',
+    'refresh_token': f'{login.refresh_token}',
     'grant_type': "refresh_token",
     'f': 'json'
 }
