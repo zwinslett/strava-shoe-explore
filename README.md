@@ -2,19 +2,19 @@
 
 This is a simple Python program for reading activity data from the Strava API, grouping those activities by the gear
 used during the activity and making some simple visualizations about that gear. This program is designed to create visualizations using
-running activities, and it assumes the type of gear used are shoes. I am sure it could be repurposed for any supported
-exercise and gear types, but, in its current state, that is not in its scope.
+data from running activities, and it assumes the type of gear used are running shoes. I am sure it could be repurposed for any supported
+exercise and gear types, but, in its current state, that is not its scope.
 
 In order to run this program, you'll need: 
 
 - A Strava account.
 - At least one activity recorded on that Strava account and one saved piece of gear associated with that activity. 
 - A personal API application on that Strava account. 
-  - the corresponding `client_id`, `client_secret` and `refresh_token` for that API application.
+  - and the corresponding `client_id`, `client_secret` and `refresh_token` for that API application.
 
 Below instructions are provided for creating a personal API application and retrieving the necessary values to run this program. 
 Please note that, in the settings for your personal API application, you will find a refresh token; however, that is not a substitute
-for the steps below describing how to retrieve a refresh token. The token provided in the settings page for your personal application
+for the steps below describing how to retrieve a refresh token for use by this program. The token provided in the settings page for your personal application
 only has read access, and this program requires a token with read all access.
 
 ## How to get client_id and client_secret
