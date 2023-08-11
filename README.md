@@ -1,7 +1,7 @@
 # Strava Shoe Explorer
 
 This is a simple Python program for reading activity data from the Strava API, grouping those activities by the gear
-used and making some simple visualizations about that gear. This program is designed to create visualizations using
+used during the activity and making some simple visualizations about that gear. This program is designed to create visualizations using
 running activities, and it assumes the type of gear used are shoes. I am sure it could be repurposed for any supported
 exercise and gear types, but, in its current state, that is not in its scope.
 
