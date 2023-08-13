@@ -196,4 +196,13 @@ ax9.yaxis.set_minor_formatter(plticker.ScalarFormatter())
 plt.savefig('box_plot_test', dpi=200)
 plt.show()
 
+# This boxplot is using the un-grouped dataframe (df) instead of the dataframe grouped by gear (df2)
+fig10, ax10 = plt.subplots()
+ax10 = df.boxplot(by="gear_id", column=['distance'], showmeans=True, meanline=True)
+plt.xticks(rotation=45)
+plt.minorticks_on()
+ax10.yaxis.set_minor_formatter(plticker.ScalarFormatter())
+plt.savefig('box_plot_test', dpi=200)
+plt.show()
+
 display(df2)
