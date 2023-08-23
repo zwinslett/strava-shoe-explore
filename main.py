@@ -80,6 +80,8 @@ df2 = df.groupby(['gear_id']).sum().reset_index()
 
 # Create a dictionary for storing the original gear_ids and their new names from the gear endpoint
 shoe_lookup = dict()
+# Create a list to store the gear_ids of shoes with less than 50 miles in distance
+distance_lookup = []
 # Loop through each gear_id in df2, make a GET request to the gear endpoint using the current gear_id,
 # save the name of the gear to the dictionary
 for index, row in df2.iterrows():
@@ -90,10 +92,27 @@ for index, row in df2.iterrows():
     # replaced this with the .replace() method below. will remove later once I am sure what's more efficient.
     # df2.loc[df2['gear_id'] == original_id, 'gear_id'] = model['model_name']
     shoe_lookup[original_id] = model['model_name']
+    # Find shoes with less than 50 miles in distance and save them to a list.
+    if model['converted_distance'] < 50:
+        distance_lookup.append(model['model_name'])
 
 # replace the gear_ids in the two dataframes with the new values saved to the shoe_lookup dictionary
 df['gear_id'] = df['gear_id'].replace(shoe_lookup)
 df2['gear_id'] = df2['gear_id'].replace(shoe_lookup)
+
+# Drop the gear_ids in the distance_look up list from df.
+for index, row in df.iterrows():
+    x = row['gear_id']
+    y = index
+    if x in distance_lookup:
+        df.drop(y, axis=0, inplace=True)
+
+# Drop the gear_ids in the distance_look up list from df2.
+for index, row in df2.iterrows():
+    x = row['gear_id']
+    y = index
+    if x in distance_lookup:
+        df2.drop(y, axis=0, inplace=True)
 
 pd.options.display.float_format = '{:,.2f}'.format
 pd.set_option('display.max_columns', None)
@@ -119,7 +138,7 @@ fig2.tight_layout()
 plt.savefig('avg_speed_scatter_plot.png', bbox_inches='tight', dpi=200)
 
 # Make a pie chart of total runs
-fig3, ax3 = plt.subplots(figsize=(8,8))
+fig3, ax3 = plt.subplots(figsize=(8, 8))
 ax3.pie(df2.total_runs, autopct=autopct_format(df2.total_runs))
 ax3.legend(labels=df2.gear_id, loc='best', bbox_to_anchor=(.3, .3))
 ax3.set_title("Percentage of Total Runs")
@@ -133,7 +152,7 @@ ax4.set_title("Percentage of Total Miles")
 plt.savefig('total_distance_pie_chart.png', bbox_inches='tight', dpi=200)
 
 # Make a bar chart comparing shoes by avg_relative_effort
-fig5, ax5 = plt.subplots(figsize=(8,8))
+fig5, ax5 = plt.subplots(figsize=(8, 8))
 ax5.bar(df2.gear_id, df2.avg_relative_effort)
 ax5.set_title("Average Relative Effort by Shoe")
 ax5.set_ylabel("Average Relative Effort")
@@ -144,7 +163,7 @@ fig5.tight_layout()
 plt.savefig('avg_relative_effort_bar_chart.png', bbox_inches='tight', dpi=200)
 
 # Make a scatter plot comparing shoes by avg_pace
-fig6, ax6 = plt.subplots(figsize=(8,8))
+fig6, ax6 = plt.subplots(figsize=(8, 8))
 ax6.scatter(df2.avg_pace, df2.gear_id)
 ax6.set_title("Average Pace by Shoe")
 ax6.set_xticks(df2.avg_pace, df2.avg_pace_labels, rotation=90)
@@ -156,7 +175,7 @@ fig6.tight_layout()
 plt.savefig('avg_pace_scatter_plot.png', bbox_inches='tight', dpi=200)
 
 # Make a bar chart comparing shoes by avg_heartrate
-fig7, ax7 = plt.subplots(figsize=(8,8))
+fig7, ax7 = plt.subplots(figsize=(8, 8))
 ax7.bar(df2.gear_id, df2.avg_heartrate)
 ax7.set_title("Average Heartrate by Shoe")
 ax7.set_ylabel("Average Heartate")
@@ -166,7 +185,7 @@ fig7.tight_layout()
 plt.savefig('avg_heartrate_bar_chart.png', bbox_inches='tight', dpi=200)
 
 # Make a scatter plot comparing shoes by avg_distance
-fig8, ax8 = plt.subplots(figsize=(8,8))
+fig8, ax8 = plt.subplots(figsize=(8, 8))
 ax8.scatter(df2.avg_distance, df2.gear_id)
 ax8.set_title("Average Distance by Shoe")
 ax8.set_xlabel("Average Distance")

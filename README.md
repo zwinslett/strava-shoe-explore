@@ -37,3 +37,16 @@ curl --request POST \
 ````
 
 - Your refresh token will be in the response as `"refresh_token"`
+
+## Image Examples 
+
+![](avg_distance_scatter_plot.png)
+![](avg_heartrate_bar_chart.png)
+![](avg_pace_scatter_plot.png)
+![](avg_relative_effort_bar_chart.png)
+![](avg_speed_scatter_plot.png)
+![](relative_effort_box_plot.png)
+![](distance_box_plot.png)
+![](total_distance_pie_chart.png)
+![](total_runs_pie_chart.png)
+
