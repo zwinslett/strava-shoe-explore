@@ -201,9 +201,11 @@ ax9 = df.boxplot(by='gear_id', column=['suffer_score'], showmeans=True, meanline
 plt.xticks(rotation=45)
 plt.minorticks_on()
 ax9.yaxis.set_minor_formatter(plticker.ScalarFormatter())
+ax9.get_figure().suptitle('')
 ax9.set_xlabel('Shoe')
 ax9.set_ylabel('Relative Effort')
 ax9.set_title('Relative Effort Box Plot')
+fig9.tight_layout()
 plt.savefig('relative_effort_box_plot', bbox_inches='tight', dpi=200)
 
 # This boxplot is using the un-grouped dataframe (df) instead of the dataframe grouped by gear (df2)
@@ -212,9 +214,11 @@ ax10 = df.boxplot(by='gear_id', column=['distance'], showmeans=True, meanline=Tr
 plt.xticks(rotation=45)
 plt.minorticks_on()
 ax10.yaxis.set_minor_formatter(plticker.ScalarFormatter())
+ax10.get_figure().suptitle('')
 ax10.set_xlabel('Shoe')
 ax10.set_ylabel('Distance')
 ax10.set_title('Distance Box Plot')
+fig10.tight_layout()
 plt.savefig('distance_box_plot', bbox_inches='tight', dpi=200)
 
 display(df2)
