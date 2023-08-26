@@ -64,10 +64,16 @@ payload = {
 - "Average Pace" is calculated by the total moving time / total miles on a shoe. 
 - The program will filter out any shoes that have less than 50 miles on them or are "retired" in the Strava UI. You can modify the code here to change this behavior:
 ```
-    if model['converted_distance'] < 50:
-        shoes_removed.append(model['model_name'])
     if model['retired']:
         shoes_removed.append(model['model_name'])
+```
+```
+for index, row in df2.iterrows():
+    x = row['distance']
+    y = index
+    z = row['gear_id']
+    if x <= 50:
+        shoes_removed.append(z)
 ```
 - The program will look up all of your shoes for all time. If you'd like to set a date range, you can modify the `activities` variable with Strava's supported date params. Example:
 ```
