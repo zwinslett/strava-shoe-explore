@@ -38,7 +38,7 @@ curl --request POST \
 
 - Your refresh token will be in the response as `"refresh_token"`
 
-## How to add these values to your program
+## How to add these values to the program
 Once you have your `refresh_token`, `client_secret` and `client_id` ready, you can either replace the values
 in the payload array with your values or add them to the `login.example.py` file and remove the "example" from the 
 file name. The login file is imported in the main program and its values are inserted into the payload
