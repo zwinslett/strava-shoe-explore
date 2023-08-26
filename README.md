@@ -38,6 +38,36 @@ curl --request POST \
 
 - Your refresh token will be in the response as `"refresh_token"`
 
+## How to run the program
+Once you have your `refresh_token`, `client_secret` and `client_id` ready, you can either replace the values
+in the payload array with your values or add them to the `login.example.py` file and remove the "example" from the 
+file name. The login file is imported in the main program and its values are inserted into the payload
+via f-strings.
+
+
+```
+payload = {
+    'client_id': f'{login.client_id}',
+    'client_secret': f'{login.client_secret}',
+    'refresh_token': f'{login.refresh_token}',
+    'grant_type': "refresh_token",
+    'f': 'json'
+}
+```
+### Various notes and "gotchas"
+- The program will filter out any shoes that have less than 50 miles on them or are "retired" in the Strava UI. You can modify the code here to change this behavior:
+```
+    if model['converted_distance'] < 50:
+        shoes_removed.append(model['model_name'])
+    if model['retired']:
+        shoes_removed.append(model['model_name'])
+```
+- The program will look up all of your shoes for all time. If you'd like to set a date range, you can modify the `activities` variable with Strava's supported date params. Example:
+```
+activities_url = "https://www.strava.com/api/v3/athlete/activities?before=1691630694&after=1690853094" 
+```
+- Strava does rate limit the amount of requests you can make to 100 requests per 15 minutes and 1000 requests per day. You can check your usage in your API application dashboard.
+- I admittedly haven't spent much time styling these charts. You may encounter ugly behavior when you reach a certain number of shoes.
 ## Image Examples 
 
 ![](avg_distance_scatter_plot.png)
