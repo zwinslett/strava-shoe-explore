@@ -61,6 +61,7 @@ payload = {
   - Rectangle: Q1 - Q3 quartiles 
   - Whiskers: Range
 - Mean (average) is a bit tricky in some places (such as speed) due to calculating "average of averages". This is why the additional data provided by the boxplot is useful, e.g., median and range.
+  - Some weighted averages could be useful for several metrics (potential roadmap item)
 - "Average Pace" is calculated by the total moving time / total miles on a shoe. 
 - The program will filter out any shoes that have less than 50 miles on them or are "retired" in the Strava UI. You can modify the code here to change this behavior:
 ```
