@@ -92,9 +92,7 @@ for index, row in df2.iterrows():
     # replaced this with the .replace() method below. will remove later once I am sure what's more efficient.
     # df2.loc[df2['gear_id'] == original_id, 'gear_id'] = model['model_name']
     model_lookup[original_id] = model['model_name']
-    # Find shoes with less than 50 miles in distance and save them to a list.
-    if model['converted_distance'] < 50:
-        shoes_removed.append(model['model_name'])
+    # Add retired models to a list
     if model['retired']:
         shoes_removed.append(model['model_name'])
 
@@ -102,14 +100,21 @@ for index, row in df2.iterrows():
 df['gear_id'] = df['gear_id'].replace(model_lookup)
 df2['gear_id'] = df2['gear_id'].replace(model_lookup)
 
-# Drop the gear_ids in the distance_look up list from df.
+for index, row in df2.iterrows():
+    x = row['distance']
+    y = index
+    z = row['gear_id']
+    if x <= 50:
+        shoes_removed.append(z)
+
+# Drop the gear_ids in the shoes_removed list from df.
 for index, row in df.iterrows():
     x = row['gear_id']
     y = index
     if x in shoes_removed:
         df.drop(y, axis=0, inplace=True)
 
-# Drop the gear_ids in the distance_look up list from df2.
+# Drop the gear_ids in the shoes_removed list from df2.
 for index, row in df2.iterrows():
     x = row['gear_id']
     y = index

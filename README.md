@@ -38,7 +38,7 @@ curl --request POST \
 
 - Your refresh token will be in the response as `"refresh_token"`
 
-## How to run the program
+## How to add these values to your program
 Once you have your `refresh_token`, `client_secret` and `client_id` ready, you can either replace the values
 in the payload array with your values or add them to the `login.example.py` file and remove the "example" from the 
 file name. The login file is imported in the main program and its values are inserted into the payload
@@ -55,6 +55,13 @@ payload = {
 }
 ```
 ### Various notes and "gotchas"
+- The box plots can be read as followed: 
+  - Dotted Lines: Mean
+  - Solid Line: Median (Q2 quartile)
+  - Rectangle: Q1 - Q3 quartiles 
+  - Whiskers: Range
+- Mean (average) is a bit tricky in some places (such as speed) due to calculating "average of averages". This is why the additional data provided by the boxplot is useful, e.g., median and range.
+- "Average Pace" is calculated by the total moving time / total miles on a shoe. 
 - The program will filter out any shoes that have less than 50 miles on them or are "retired" in the Strava UI. You can modify the code here to change this behavior:
 ```
     if model['converted_distance'] < 50:
