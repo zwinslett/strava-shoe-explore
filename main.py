@@ -118,107 +118,103 @@ for index, row in df2.iterrows():
 
 pd.options.display.float_format = '{:,.2f}'.format
 pd.set_option('display.max_columns', None)
+df['avg_cadence'] = df['average_cadence'] * 2
 df2['avg_pace'] = df2['moving_time'] / df2['distance']
 df2.sort_values(by=['avg_pace'], inplace=True, ascending=False)
 df2['avg_pace_labels'] = pd.to_datetime(df2['avg_pace'], unit='s').dt.strftime('%M:%S')
 df2['moving_time'] = pd.to_datetime(df2['moving_time'], unit='s').dt.strftime('%H:%M:%S')
-df2['avg_relative_effort'] = df2['suffer_score'] / df2['total_runs']
-df2['avg_speed'] = df2['average_speed'] / df2['total_runs']
 df2['avg_heartrate'] = df2['average_heartrate'] / df2['total_runs']
 df2['avg_distance'] = df2['distance'] / df2['total_runs']
-df2 = df2[['gear_id', 'moving_time', 'distance', 'avg_pace', 'total_runs', 'avg_relative_effort', 'avg_speed',
-           'avg_heartrate', 'avg_pace_labels', 'avg_distance', 'suffer_score']]
+df2 = df2[['gear_id', 'moving_time', 'distance', 'avg_pace', 'total_runs', 'avg_pace_labels', 'avg_distance']]
 
-# Make a scatter plot comparing shoes by average speed
-fig2, ax2 = plt.subplots(figsize=(8, 8))
-ax2.scatter(df2.avg_speed, df2.gear_id)
-ax2.set_title('Average Speed by Shoe')
-ax2.set_xlabel('MPH')
-ax2.set_ylabel('Shoe')
-ax2.set_yticks(df2.gear_id, df2.gear_id)
-fig2.tight_layout()
-plt.savefig('avg_speed_scatter_plot.png', bbox_inches='tight', dpi=200)
 
 # Make a pie chart of total runs
-fig3, ax3 = plt.subplots(figsize=(8, 8))
-ax3.pie(df2.total_runs, autopct=autopct_format(df2.total_runs))
-ax3.legend(labels=df2.gear_id, loc='best', bbox_to_anchor=(.3, .3))
-ax3.set_title('Percentage of Total Runs')
+fig, ax = plt.subplots(figsize=(8, 8))
+ax.pie(df2.total_runs, autopct=autopct_format(df2.total_runs))
+ax.legend(labels=df2.gear_id, loc='best', bbox_to_anchor=(.3, .3))
+ax.set_title('Percentage of Total Runs')
 plt.savefig('total_runs_pie_chart.png', bbox_inches='tight', dpi=200)
 
 # Make a pie chart of total miles
-fig4, ax4 = plt.subplots(figsize=(8, 8))
-ax4.pie(df2.distance, autopct=autopct_format(df2.distance))
-ax4.legend(labels=df2.gear_id, loc='best', bbox_to_anchor=(.3, .3))
-ax4.set_title('Percentage of Total Miles')
+fig2, ax2 = plt.subplots(figsize=(8, 8))
+ax2.pie(df2.distance, autopct=autopct_format(df2.distance))
+ax2.legend(labels=df2.gear_id, loc='best', bbox_to_anchor=(.3, .3))
+ax2.set_title('Percentage of Total Miles')
 plt.savefig('total_distance_pie_chart.png', bbox_inches='tight', dpi=200)
 
-# Make a bar chart comparing shoes by avg_relative_effort
-fig5, ax5 = plt.subplots(figsize=(8, 8))
-ax5.bar(df2.gear_id, df2.avg_relative_effort)
-ax5.set_title('Average Relative Effort by Shoe')
-ax5.set_ylabel('Average Relative Effort')
-ax5.set_xlabel('Shoe')
-ax5.set_yticks((0, 20, 40, 60, 80))
-ax5.set_xticks(df2.gear_id, df2.gear_id, rotation=45)
-fig5.tight_layout()
-plt.savefig('avg_relative_effort_bar_chart.png', bbox_inches='tight', dpi=200)
-
 # Make a scatter plot comparing shoes by avg_pace
-fig6, ax6 = plt.subplots(figsize=(8, 8))
-ax6.scatter(df2.avg_pace, df2.gear_id)
-ax6.set_title('Average Pace by Shoe')
-ax6.set_xticks(df2.avg_pace, df2.avg_pace_labels, rotation=90)
-ax6.set_xlabel('Average Pace')
-ax6.set_ylabel('Shoe')
-ax6.invert_xaxis()
-ax6.xaxis.set_minor_locator(plticker.LinearLocator())
-fig6.tight_layout()
+fig3, ax3 = plt.subplots(figsize=(8, 8))
+ax3.scatter(df2.avg_pace, df2.gear_id)
+ax3.set_title('Average Pace by Shoe')
+ax3.set_xticks(df2.avg_pace, df2.avg_pace_labels, rotation=90)
+ax3.set_xlabel('Average Pace')
+ax3.set_ylabel('Shoe')
+ax3.invert_xaxis()
+ax3.xaxis.set_minor_locator(plticker.LinearLocator())
+fig3.tight_layout()
 plt.savefig('avg_pace_scatter_plot.png', bbox_inches='tight', dpi=200)
 
-# Make a bar chart comparing shoes by avg_heartrate
-fig7, ax7 = plt.subplots(figsize=(8, 8))
-ax7.bar(df2.gear_id, df2.avg_heartrate)
-ax7.set_title('Average Heartrate by Shoe')
-ax7.set_ylabel('Average Heartate')
-ax7.set_xlabel('Shoe')
-ax7.set_xticks(df2.gear_id, df2.gear_id, rotation=45)
-fig7.tight_layout()
-plt.savefig('avg_heartrate_bar_chart.png', bbox_inches='tight', dpi=200)
-
-# Make a scatter plot comparing shoes by avg_distance
-fig8, ax8 = plt.subplots(figsize=(8, 8))
-ax8.scatter(df2.avg_distance, df2.gear_id)
-ax8.set_title('Average Distance by Shoe')
-ax8.set_xlabel('Average Distance')
-ax8.set_ylabel('Shoe')
-fig8.tight_layout()
-plt.savefig('avg_distance_scatter_plot.png', bbox_inches='tight', dpi=200)
-
-# This boxplot is using the un-grouped dataframe (df) instead of the dataframe grouped by gear (df2)
-fig9, ax9 = plt.subplots()
-ax9 = df.boxplot(by='gear_id', column=['suffer_score'], showmeans=True, meanline=True)
+# Make a box plot comparing shoes by relative effort
+fig4, ax4 = plt.subplots()
+ax4 = df.boxplot(by='gear_id', column=['suffer_score'], showmeans=True, meanline=True)
 plt.xticks(rotation=45)
 plt.minorticks_on()
-ax9.yaxis.set_minor_formatter(plticker.ScalarFormatter())
-ax9.get_figure().suptitle('')
-ax9.set_xlabel('Shoe')
-ax9.set_ylabel('Relative Effort')
-ax9.set_title('Relative Effort Box Plot')
-fig9.tight_layout()
+ax4.yaxis.set_minor_formatter(plticker.ScalarFormatter())
+ax4.get_figure().suptitle('')
+ax4.set_xlabel('Shoe')
+ax4.set_ylabel('Relative Effort')
+ax4.set_title('Relative Effort Box Plot')
+fig4.tight_layout()
 plt.savefig('relative_effort_box_plot', bbox_inches='tight', dpi=200)
 
-# This boxplot is using the un-grouped dataframe (df) instead of the dataframe grouped by gear (df2)
-fig10, ax10 = plt.subplots()
-ax10 = df.boxplot(by='gear_id', column=['distance'], showmeans=True, meanline=True)
+# Make a box plot comparing shoes by distance per activity.
+fig5, ax5 = plt.subplots()
+ax5 = df.boxplot(by='gear_id', column=['distance'], showmeans=True, meanline=True)
 plt.xticks(rotation=45)
 plt.minorticks_on()
-ax10.yaxis.set_minor_formatter(plticker.ScalarFormatter())
-ax10.get_figure().suptitle('')
-ax10.set_xlabel('Shoe')
-ax10.set_ylabel('Distance')
-ax10.set_title('Distance Box Plot')
-fig10.tight_layout()
+ax5.yaxis.set_minor_formatter(plticker.ScalarFormatter())
+ax5.get_figure().suptitle('')
+ax5.set_xlabel('Shoe')
+ax5.set_ylabel('Distance')
+ax5.set_title('Distance Box Plot')
+fig5.tight_layout()
 plt.savefig('distance_box_plot', bbox_inches='tight', dpi=200)
 
-display(df2)
+# Make a boxplot comparing shoes by average cadence.
+fig6, ax6 = plt.subplots()
+ax6 = df.boxplot(by='gear_id', column=['avg_cadence'], showmeans=True, meanline=True)
+plt.xticks(rotation=45)
+plt.minorticks_on()
+ax6.yaxis.set_minor_formatter(plticker.ScalarFormatter())
+ax6.get_figure().suptitle('')
+ax6.set_xlabel('Shoe')
+ax6.set_ylabel('Cadence')
+ax6.set_title('Cadence Box Plot')
+fig6.tight_layout()
+plt.savefig('cadence_box_plot', bbox_inches='tight', dpi=200)
+
+# Make a box plot comparing shoes by heartrate during activity.
+fig7, ax7 = plt.subplots()
+ax7 = df.boxplot(by='gear_id', column=['average_heartrate'], showmeans=True, meanline=True)
+plt.xticks(rotation=45)
+plt.minorticks_on()
+ax7.yaxis.set_minor_formatter(plticker.ScalarFormatter())
+ax7.get_figure().suptitle('')
+ax7.set_xlabel('Shoe')
+ax7.set_ylabel('Heartrate')
+ax7.set_title('Heartrate Box Plot')
+fig7.tight_layout()
+plt.savefig('heartrate_box_plot', bbox_inches='tight', dpi=200)
+
+# Make a box plot comparing shoes by average speed during activity.
+fig8, ax8 = plt.subplots()
+ax8 = df.boxplot(by='gear_id', column=['average_speed'], showmeans=True, meanline=True)
+plt.xticks(rotation=45)
+plt.minorticks_on()
+ax8.yaxis.set_minor_formatter(plticker.ScalarFormatter())
+ax8.get_figure().suptitle('')
+ax8.set_xlabel('Shoe')
+ax8.set_ylabel('Speed')
+ax8.set_title('Speed Box Plot')
+fig8.tight_layout()
+plt.savefig('speed_box_plot', bbox_inches='tight', dpi=200)
