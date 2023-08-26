@@ -69,12 +69,12 @@ activities_url = "https://www.strava.com/api/v3/athlete/activities?before=169163
 - Strava does rate limit the amount of requests you can make to 100 requests per 15 minutes and 1000 requests per day. You can check your usage in your API application dashboard.
 - I admittedly haven't spent much time styling these charts. You may encounter ugly behavior when you reach a certain number of shoes.
 ## Image Examples 
-![](total_distance_pie_chart.png)
-![](total_runs_pie_chart.png)
-![](avg_pace_scatter_plot.png)
-![](cadence_box_plot.png)
-![](distance_box_plot.png)
-![](heartrate_box_plot.png)
-![](relative_effort_box_plot.png)
-![](speed_box_plot.png)
+![](imgs/total_distance_pie_chart.png)
+![](imgs/total_runs_pie_chart.png)
+![](imgs/avg_pace_scatter_plot.png)
+![](imgs/cadence_box_plot.png)
+![](imgs/distance_box_plot.png)
+![](imgs/heartrate_box_plot.png)
+![](imgs/relative_effort_box_plot.png)
+![](imgs/speed_box_plot.png)
 
