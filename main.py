@@ -74,8 +74,8 @@ meters_to_miles()
 mph_convert()
 df = pd.DataFrame(data=activities)
 df['total_runs'] = df.groupby('id')['gear_id'].transform('count')
-# Create a new dataframe grouped by gear_id. this will be useful for simplified visualizations like pie charts
-# as well as making GET requests to the gear endpoint later without having to check for uniqueness
+# Create a new dataframe grouped by gear_id. this will be useful for simplified visualizations like pie charts as
+# well as making GET requests to the gear endpoint later without having to check for uniqueness (fewer requests = good)
 df2 = df.groupby(['gear_id']).sum().reset_index()
 
 # Create a dictionary for storing the original gear_ids and their new names from the gear endpoint
@@ -92,7 +92,7 @@ for index, row in df2.iterrows():
     # replaced this with the .replace() method below. will remove later once I am sure what's more efficient.
     # df2.loc[df2['gear_id'] == original_id, 'gear_id'] = model['model_name']
     model_lookup[original_id] = model['model_name']
-    # Add retired models to a list
+    # Add retired models to the shoes_removed list
     if model['retired']:
         shoes_removed.append(model['model_name'])
 
@@ -100,6 +100,7 @@ for index, row in df2.iterrows():
 df['gear_id'] = df['gear_id'].replace(model_lookup)
 df2['gear_id'] = df2['gear_id'].replace(model_lookup)
 
+# Add gear with less than X miles to the shoes_removed list.
 for index, row in df2.iterrows():
     x = row['distance']
     y = index

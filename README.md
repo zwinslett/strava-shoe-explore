@@ -55,6 +55,7 @@ payload = {
 }
 ```
 ### Various notes and "gotchas"
+- I want to caveat that this data is not necessarily revelatory. First, it's often self-evident. It's a self-fulfilling prophecy the shoe you bought for interval training is the shoe with the highest average speed for example. Second, there are a lot of qualitative data points such as "how were you feeling that day?" or "do you only use this shoe for a certain type of work out?". Where this data might be useful is in making comparisons between shoes with similar usage profiles and looking for slight performance differences over time. However, it's most likely only useful in serving as a confirmation of your training regimen and gear selection and identifying outlier performances/usage. My main goal was to spread awareness of the Strava API and potential uses for it.
 - The box plots can be read as followed: 
   - Dotted Lines: Mean
   - Solid Line: Median (Q2 quartile)
