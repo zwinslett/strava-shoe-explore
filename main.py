@@ -3,7 +3,6 @@ import matplotlib.ticker as plticker
 import pandas as pd
 import requests
 import urllib3
-from IPython.display import display
 from pandas import json_normalize
 
 import login as login
@@ -29,14 +28,16 @@ header = {'Authorization': 'Bearer ' + access_token}
 
 
 # The Strava API only supports 200 results per page. This function loops through each page until new_results is empty.
-def loop_through_pages():
-    # start at page 1
-    page = 1
+def loop_through_pages(page):
+    # start at page ...
+    page = page
     # set new_results to True initially
     new_results = True
     # create an empty array to store our combined pages of data in
     data = []
     while new_results:
+        # Give some feedback
+        print(f'You are requesting page {page} of your activities data ...')
         # request a page + 200 results
         get_strava = requests.get(activities_url, headers=header, params={'per_page': 200, 'page': f'{page}'}).json()
         # save the response to new_results to check if its empty or not and close the loop
@@ -47,10 +48,6 @@ def loop_through_pages():
         page += 1
     # return the combine results of our get requests
     return data
-
-
-my_dataset = loop_through_pages()
-activities = json_normalize(my_dataset)
 
 
 def meters_to_miles():
@@ -70,6 +67,9 @@ def autopct_format(values):
     return my_format
 
 
+# call the function to loop through our strava pages and set the starting page at 1
+my_dataset = loop_through_pages(1)
+activities = json_normalize(my_dataset)
 meters_to_miles()
 mph_convert()
 df = pd.DataFrame(data=activities)
@@ -89,12 +89,12 @@ for index, row in df2.iterrows():
     url = f'https://www.strava.com/api/v3/gear/{original_id}'
     response = requests.get(url, headers=header)
     model = response.json()
-    # replaced this with the .replace() method below. will remove later once I am sure what's more efficient.
-    # df2.loc[df2['gear_id'] == original_id, 'gear_id'] = model['model_name']
     model_lookup[original_id] = model['model_name']
     # Add retired models to the shoes_removed list
     if model['retired']:
         shoes_removed.append(model['model_name'])
+    # Give some feedback
+    print(f"You are requesting {model['model_name']}  ...")
 
 # replace the gear_ids in the two dataframes with the new values saved to the shoe_lookup dictionary
 df['gear_id'] = df['gear_id'].replace(model_lookup)
