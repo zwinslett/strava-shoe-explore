@@ -70,9 +70,9 @@ def autopct_format(values):
 # call the function to loop through our strava pages and set the starting page at 1
 my_dataset = loop_through_pages(1)
 my_cleaned_dataset = []
-for dictionary in my_dataset:
-    if dictionary['type'] == 'Run':
-        my_cleaned_dataset.append(dictionary)
+for activities in my_dataset:
+    if activities['type'] == 'Run':
+        my_cleaned_dataset.append(activities)
 activities = json_normalize(my_cleaned_dataset)
 meters_to_miles()
 mph_convert()
