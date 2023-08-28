@@ -3,10 +3,12 @@ import matplotlib.ticker as plticker
 import pandas as pd
 import requests
 import urllib3
+import seaborn as sns
 from pandas import json_normalize
 
 import login as login
 
+sns.set_theme()
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 auth_url = 'https://www.strava.com/oauth/token'
@@ -69,6 +71,7 @@ def autopct_format(values):
 
 # call the function to loop through our strava pages and set the starting page at 1
 my_dataset = loop_through_pages(1)
+# Filter out any activities that aren't runs.
 my_cleaned_dataset = []
 for activities in my_dataset:
     if activities['type'] == 'Run':
