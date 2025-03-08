@@ -112,7 +112,7 @@ for index, row in df2.iterrows():
     x = row['distance']
     y = index
     z = row['gear_id']
-    if x <= 50:
+    if x <= 150:
         shoes_removed.append(z)
 
 # Drop the gear_ids in the shoes_removed list from df.
